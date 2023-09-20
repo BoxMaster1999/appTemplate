@@ -1,0 +1,4 @@
+# dev artefacts
+/tmp
+.idea
+*ipynb
