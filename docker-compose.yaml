@@ -1,0 +1,11 @@
+services:
+  simple-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    volumes:
+      - .:/app
+      - ./tmp:/tmp
+    ports:
+      - '8080:8080'
