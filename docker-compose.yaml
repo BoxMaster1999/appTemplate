@@ -1,7 +1,7 @@
 services:
   simple-app:
     build:
-      context: .
+      context: ./app
       dockerfile: Dockerfile
       target: dev
     volumes:
