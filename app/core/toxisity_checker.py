@@ -1,7 +1,9 @@
 class ToxisityChacker:
 
-    def __init__(self, path):
-        pass
+    def __init__(self, path=''):
+        if not path:
+            pass
+
 
     def check(self, text):
-        pass
+        return True
