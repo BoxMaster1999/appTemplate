@@ -9,7 +9,9 @@ app = FastAPI(title='Toxisity checker',
 
 # Adding v1 namespace route
 app.include_router(v1_router)
+print('router add succeed')
 
+print('Пидор')
 
 @app.get('/health',
          tags=['System probs'])

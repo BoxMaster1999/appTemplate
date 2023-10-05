@@ -9,8 +9,6 @@ from app.core import safe_naming_checker
 router = APIRouter(prefix="/v1")
 
 
-print(safe_naming_checker.check_safety('Привет'))
-
 @router.post('/toxisity_check',
              description='Проверка текста на токсичность',
              tags=['Inference endpoints'],

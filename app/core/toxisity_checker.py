@@ -18,19 +18,6 @@ path_to_eng_model = snapshot_download("citizenlab/distilbert-base-multilingual-c
 # More about CACH system -  
 # https://huggingface.co/docs/huggingface_hub/guides/manage-cache#manage-huggingfacehub-cachesystem
 """
-# Dowload all models online from Huggingface everytime
-path_to_rus_model = 'cointegrated/rubert-tiny-toxicity'
-path_to_eng_model = 'citizenlab/distilbert-base-multilingual-cased-toxicity'
-
-
-# Loading models takes time anyway (even from cach), so leave it outside of class object creation.
-# Load ru model directly
-model_ru = AutoModelForSequenceClassification.from_pretrained(path_to_rus_model)
-tokenizer_ru = AutoTokenizer.from_pretrained(path_to_rus_model)
-
-# Use a pipeline as a high-level helper for en model
-text2toxicity_en = pipeline("text-classification", model=path_to_eng_model)
-
 
 class SafeNaming:
     """This class contains functions to check if the typed sentence is toxic or just contains a personal name"""
@@ -43,7 +30,7 @@ class SafeNaming:
         self.model_ru = AutoModelForSequenceClassification.from_pretrained(path_to_rus_model)
         self.tokenizer_ru = AutoTokenizer.from_pretrained(path_to_rus_model)
         self.text2toxicity_en = pipeline("text-classification", model=path_to_eng_model)
-        print('LOADED SUCCEED')
+        print('model loading succeed')
         self.silent = silent
         self.toxity_level = toxity_level
 
