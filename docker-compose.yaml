@@ -6,6 +6,7 @@ services:
       target: dev
     volumes:
       - .:/app
-      - ./tmp:/tmp
+      # model files
+      - ./models:/models
     ports:
       - '8080:8080'

@@ -1,1 +1,1 @@
-PATH = 'tmp'
+PATH = 'models'
