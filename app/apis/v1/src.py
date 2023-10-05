@@ -2,8 +2,9 @@ from fastapi import UploadFile, File, status
 from fastapi.routing import APIRouter
 
 from app.apis.v1.model import InputBase, OutputBase
-from app.core import ToxisityChacker
 from app.config import *
+
+from app.core import ToxisityChacker
 
 router = APIRouter(prefix="/v1")
 
