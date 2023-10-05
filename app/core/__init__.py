@@ -1,2 +1,2 @@
 # module for core logic
-from .toxisity_checker import ToxisityChacker
+from .toxisity_checker import SafeNaming

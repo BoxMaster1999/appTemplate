@@ -6,3 +6,6 @@ python-multipart==0.0.6
 starlette==0.27.0
 SQLAlchemy==2.0.21
 uvicorn==0.23.2
+# core requirements
+transformers==4.34.0
+torch==2.1.0
