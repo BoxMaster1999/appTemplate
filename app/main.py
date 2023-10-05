@@ -3,8 +3,8 @@ from fastapi import FastAPI, status
 from app.apis import v1_router
 
 
-app = FastAPI(title='appTemplate',
-              description='Fastapi template',
+app = FastAPI(title='Toxisity checker',
+              description='Fastapi service for check toxisity',
               version='0.1')
 
 # Adding v1 namespace route

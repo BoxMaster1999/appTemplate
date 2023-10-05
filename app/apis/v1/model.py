@@ -2,12 +2,9 @@ from pydantic import BaseModel
 
 
 class InputBase(BaseModel):
-    pass
+    text: str
 
 
-class InferenceOutput(BaseModel):
-    uuid_: str
-
-
-class UploadOutput(BaseModel):
-    filename: str
+class OutputBase(BaseModel):
+    text: str
+    is_toxic: bool

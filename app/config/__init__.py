@@ -1,1 +1,1 @@
-from .config import STORAGE_PATH
+from .config import PATH

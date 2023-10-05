@@ -1,1 +1,1 @@
-STORAGE_PATH = 'tmp'
+PATH = 'tmp'
