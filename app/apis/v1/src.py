@@ -16,4 +16,5 @@ toxisity_checker = SafeNaming()
              status_code=status.HTTP_200_OK,
              response_model=OutputBase)
 def process_base(input_: InputBase) -> OutputBase:
+    print(toxisity_checker.check_safety(input_.text))
     return OutputBase(text=input_.text, is_toxic=toxisity_checker.check_safety(input_.text))
