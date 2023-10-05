@@ -37,25 +37,15 @@ class SafeNaming:
 
     def __init__(self, toxity_level=0.5, silent=True):
         """Constructor"""
-
         # Dowload all models online from Huggingface everytime
         path_to_rus_model = 'cointegrated/rubert-tiny-toxicity'
         path_to_eng_model = 'citizenlab/distilbert-base-multilingual-cased-toxicity'
-        model_ru = AutoModelForSequenceClassification.from_pretrained(path_to_rus_model)
-        tokenizer_ru = AutoTokenizer.from_pretrained(path_to_rus_model)
-        text2toxicity_en = pipeline("text-classification", model=path_to_eng_model)
-
+        self.model_ru = AutoModelForSequenceClassification.from_pretrained(path_to_rus_model)
+        self.tokenizer_ru = AutoTokenizer.from_pretrained(path_to_rus_model)
+        self.text2toxicity_en = pipeline("text-classification", model=path_to_eng_model)
+        print('LOADED SUCCEED')
         self.silent = silent
-
-        # Load ru model directly
-        self.tokenizer_ru = tokenizer_ru
-        self.model_ru = model_ru
-        if torch.cuda.is_available():
-            self.model_ru.cuda()
         self.toxity_level = toxity_level
-
-        # Use a pipeline as a high-level helper for en model
-        self.text2toxicity_en = text2toxicity_en  # Get label of toxicity from english/"""
 
     def text2toxicity_ru(self, srting):
         """ Calculate  a vector of toxicity aspects on russian"""
@@ -265,3 +255,5 @@ checker = Safe_naming_prompt_q(toxity_level=0.05, tokenizer_ru=tokenizer_ru, mod
 print (checker.check_safety('nihuya sebe'))
 
 """
+
+safe_naming_checker = SafeNaming()
