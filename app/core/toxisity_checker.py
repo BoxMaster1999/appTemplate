@@ -1,28 +1,12 @@
-# import pandas as pd
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from transformers import pipeline
 
-"""
-#Dowload all models from Huggingface one time and cached:
-
-from huggingface_hub import snapshot_download
-
-path_to_rus_model = snapshot_download("cointegrated/rubert-tiny-toxicity")
-path_to_eng_model = snapshot_download("citizenlab/distilbert-base-multilingual-cased-toxicity")
-
-# path_to_rus_model now contains path to cached rus model
-# path_to_eng_model now contains path to cached eng model
-
-# need to save paths and use any time
-# More about CACH system -  
-# https://huggingface.co/docs/huggingface_hub/guides/manage-cache#manage-huggingfacehub-cachesystem
-"""
 
 class SafeNaming:
     """This class contains functions to check if the typed sentence is toxic or just contains a personal name"""
 
-    def __init__(self, toxity_level=0.5, silent=True):
+    def __init__(self, toxity_level=0.5, silent=False):
         """Constructor"""
         # Dowload all models online from Huggingface everytime
         path_to_rus_model = 'cointegrated/rubert-tiny-toxicity'
@@ -34,12 +18,11 @@ class SafeNaming:
         self.silent = silent
         self.toxity_level = toxity_level
 
-    def text2toxicity_ru(self, srting):
+    def text2toxicity_ru(self, text):
         """ Calculate  a vector of toxicity aspects on russian"""
         with torch.no_grad():
-            inputs = self.tokenizer_ru(srting, return_tensors='pt', truncation=True, padding=True).to(
-                self.model_ru.device)
-            proba = torch.sigmoid(self.model_ru(**inputs).logits).cpu().numpy()
+            inputs = self.tokenizer_ru(text, return_tensors='pt', truncation=True, padding=True)
+            proba = torch.sigmoid(self.model_ru(**inputs).logits).numpy()
         return proba[0]
 
     def prepair(self, string):
@@ -123,21 +106,18 @@ class SafeNaming:
         else:
             return False
 
-    def full_check_for_all_russian(self, string):
+    def full_check_for_all_russian(self, string) -> bool:
         if self.check_russian(string):  # проверка как русского слова
             return True
-
         if self.check_english(
                 self.transliteration_sound_ru_en(string)):  # звуковая транслитерация и проверка как аглийского слова
             return True
-
         if self.check_english(
                 self.transliteration_sumbol_ru_en(string)):  # символьная транслитерация и проверка как аглийского слова
             return True
-
         return False
 
-    def full_check_for_all_english(self, string):
+    def full_check_for_all_english(self, string) -> bool:
         if self.check_english(string):  # проверка как аглийского слова
             return True
 
@@ -151,7 +131,7 @@ class SafeNaming:
 
         return False
 
-    def check_safety(self, string: str) -> str:
+    def check_safety(self, string: str) -> bool:
 
         if isinstance(string, str):
             string = self.prepair(string)
@@ -223,24 +203,5 @@ class SafeNamingPromptQTitle(SafeNaming):
         else:
             return False
 
-
-"""
-text2 = pd.read_excel('/content/drive/MyDrive/кейсы с именами.xlsx')
-checker = Safe_naming(toxity_level=0.5, tokenizer_ru=tokenizer_ru, model_ru=model_ru, text2toxicity_en=text2toxicity_en, silent =True)
-text2['toxity_level=0.5'] = text2.text.apply(lambda x: checker.check_safety(x))
-checker = Safe_naming(toxity_level=0.1, tokenizer_ru=tokenizer_ru, model_ru=model_ru, text2toxicity_en=text2toxicity_en, silent =True)
-text2['toxity_level=0.1'] = text2.text.apply(lambda x: checker.check_safety(x))
-checker = Safe_naming(toxity_level=0.05, tokenizer_ru=tokenizer_ru, model_ru=model_ru, text2toxicity_en=text2toxicity_en, silent =True)
-text2['toxity_level=0.05'] = text2.text.apply(lambda x: checker.check_safety(x))
-checker = Safe_naming(toxity_level=0.01, tokenizer_ru=tokenizer_ru, model_ru=model_ru, text2toxicity_en=text2toxicity_en, silent =True)
-text2['toxity_level=0.01'] = text2.text.apply(lambda x: checker.check_safety(x))
-
-checker = Safe_naming_prompt_q_title(toxity_level=0.05, tokenizer_ru=tokenizer_ru, model_ru=model_ru, text2toxicity_en=text2toxicity_en, silent=False)
-checker = Safe_naming_prompt_q(toxity_level=0.05, tokenizer_ru=tokenizer_ru, model_ru=model_ru, text2toxicity_en=text2toxicity_en, silent=False)
-
-
-print (checker.check_safety('nihuya sebe'))
-
-"""
-
 safe_naming_checker = SafeNaming()
+print(safe_naming_checker.check_safety('Пидор'))

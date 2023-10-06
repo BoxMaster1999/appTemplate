@@ -7,6 +7,6 @@ services:
     volumes:
       - .:/app
       # model files
-      - ./models:/models
+      - ./models:/root/.cache/huggingface
     ports:
       - '8081:8080'

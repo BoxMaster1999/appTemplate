@@ -11,7 +11,6 @@ app = FastAPI(title='Toxisity checker',
 app.include_router(v1_router)
 print('router add succeed')
 
-print('Пидор')
 
 @app.get('/health',
          tags=['System probs'])

@@ -8,4 +8,4 @@ SQLAlchemy==2.0.21
 uvicorn==0.23.2
 # core requirements
 transformers==4.34.0
-torch==2.1.0
+torch==1.13.1
